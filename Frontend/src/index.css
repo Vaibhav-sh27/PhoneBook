@@ -1,0 +1,17 @@
+body{
+  background-color: #2d3439;
+}
+*{
+  margin: 0;
+  padding: 0;
+}
+.table{ 
+  margin-top: 10px;
+  width: 100%;
+  background-color: #42484d;
+
+} 
+.table p, .table th, .table td{
+  color: white;
+
+}
