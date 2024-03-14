@@ -3,19 +3,22 @@ import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { MDBBadge, MDBBtn, MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import Add from './Add';
 
-const Show = () => {
-    let [d, setD] = useState([]);
-    useEffect(()=>{
-        axios.get(`${window.API_URL}/all`).then((data)=>{
-        console.log(data);
-        setD(data.data);
-    })
-    }, [d])
+const Show = ({setD, d, setShow, show, setItem}) => {
+  let navigate = useNavigate();
+ 
 
-    function handleDelete() {
-        
+    function handleDelete(id) {
+        axios.delete(`${window.API_URL}/delete/${id}`);
+        setD((t)=>t.filter((y)=>y.id!==id))
+
     }
+
+    // function handleEdit(id) {
+    //   return Add(setD={setD}, d={d})
+    // }
   return (
     <MDBTable align='middle' style={{color:"white"}}>
       <MDBTableHead >
@@ -54,10 +57,14 @@ const Show = () => {
           </td>
           <td>{item.address}</td>
           <td>
-            <MDBBtn color='link' rounded size='sm'>
+            <MDBBtn color='link' rounded size='sm' onClick={()=>{
+              setItem(item)
+              setShow(true)
+              
+            }}>
               Edit
             </MDBBtn>
-            <MDBBtn color='danger' rounded size='sm' onClick={handleDelete}>
+            <MDBBtn color='danger' rounded size='sm' onClick={()=>handleDelete(item.id)}>
               Delete
             </MDBBtn>
           </td>
