@@ -54,17 +54,18 @@ const Add = ({setD, d, setShow, show, item, setItem}) => {
         setD((t)=>[...t, item]);
     }
 
-    function handleEdit(id) {
+    function handleEdit(it) {
       let item = {
-        id: id,
-        first_name: fname, 
-        middle_name: mname, 
-        last_name: lname, 
-        email: email, 
-        ph_no1: phno1, 
-        ph_no2: phno2, 
-        address: address
+        id: it.id,
+        first_name: fname? fname: it.first_name, 
+        middle_name: mname? mname: it.middle_name, 
+        last_name: lname? lname:it.last_name, 
+        email: email? email: it.email, 
+        ph_no1: phno1? phno1: it.ph_no1, 
+        ph_no2: phno2? phno2: it.ph_no2, 
+        address: address? address: it.address
     }
+    console.log(item);
 
     //axios
     axios.patch(`${window.API_URL}/update/${item.id}`, item)
@@ -202,7 +203,7 @@ const Add = ({setD, d, setShow, show, item, setItem}) => {
               Close
             </Button>
             {item.id?
-              <Button variant="primary" onClick={()=> handleEdit(item.id)}>
+              <Button variant="primary" onClick={()=> handleEdit(item)}>
               Save Changes
             </Button> :
             <Button variant="primary" onClick={handleSubmit}>
